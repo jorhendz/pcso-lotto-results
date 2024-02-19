@@ -10,7 +10,8 @@ if (!defined('ABSPATH')) {
 }
 
 // Update check URL
-define('PCSO_UPDATE_CHECK_URL', 'https://raw.githubusercontent.com/jorhendz/pcso-lotto-results/main/update-check.php');
+// Update check URL
+define('PCSO_UPDATE_CHECK_URL', 'https://raw.githubusercontent.com/jorhendz/pcso-lotto-results/main/version.txt');
 
 // Check for plugin updates
 function check_plugin_updates($transient) {
@@ -39,6 +40,7 @@ function check_plugin_updates($transient) {
     return $transient;
 }
 add_filter('pre_set_site_transient_update_plugins', 'check_plugin_updates');
+
 
 // Display update notice
 function display_update_notice($transient) {
