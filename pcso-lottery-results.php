@@ -41,15 +41,25 @@ function check_plugin_updates($transient) {
 add_filter('pre_set_site_transient_update_plugins', 'check_plugin_updates');
 
 // Display update notice
-function display_update_notice() {
+function display_update_notice($transient) {
     $current_version = get_plugin_data(__FILE__)['Version'];
-    $latest_version = $transient->response[plugin_basename(__FILE__)]->new_version;
-    if (version_compare($current_version, $latest_version, '<')) {
-        $update_url = admin_url('update.php?action=upgrade-plugin&plugin=' . urlencode(plugin_basename(__FILE__)));
-        $message = sprintf(__('There is a new version (%s) of PCSO Lottery Results available. <a href="%s">Update now</a>.'), $latest_version, $update_url);
-        echo '<div class="notice notice-warning"><p>' . $message . '</p></div>';
+    
+    // Check if the transient contains update information for this plugin
+    if (isset($transient->response[plugin_basename(__FILE__)])) {
+        $latest_version = $transient->response[plugin_basename(__FILE__)]->new_version;
+        
+        // Compare current version with the latest version
+        if (version_compare($current_version, $latest_version, '<')) {
+            $update_url = admin_url('update.php?action=upgrade-plugin&plugin=' . urlencode(plugin_basename(__FILE__)));
+            $message = sprintf(__('There is a new version (%s) of PCSO Lottery Results available. <a href="%s">Update now</a>.'), $latest_version, $update_url);
+            echo '<div class="notice notice-warning"><p>' . $message . '</p></div>';
+        }
     }
 }
+
+// Call the function and pass $transient as a parameter
+add_action('in_plugin_update_message-' . plugin_basename(__FILE__), 'display_update_notice');
+
 add_action('admin_notices', 'display_update_notice');
 
 define('PCSO_URL_DEFAULT', 'https://www.pcso.gov.ph/SearchLottoResult.aspx');
