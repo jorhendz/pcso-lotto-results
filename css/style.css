@@ -1,0 +1,24 @@
+.lottery-results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lottery-results-table th,
+.lottery-results-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.lottery-results-table th {
+  font-weight: bold;
+	
+}
+
+.lottery-results-table .draw-name,
+.lottery-results-table .winning-numbers,
+.lottery-results-table .draw-date,
+.lottery-results-table .jackpot {
+  width: 25%;
+}
+
