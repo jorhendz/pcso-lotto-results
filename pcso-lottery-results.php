@@ -42,7 +42,7 @@ add_filter('pre_set_site_transient_update_plugins', 'check_plugin_updates');
 
 define('PCSO_URL_DEFAULT', 'https://www.pcso.gov.ph/SearchLottoResult.aspx');
 
-// Fetch PCSO URL from options or use default if not set
+// Fetch PCSO URL from options or use default if not set - new updates
 function get_pcso_url() {
     return get_option('pcso_url', PCSO_URL_DEFAULT);
 }
