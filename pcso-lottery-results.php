@@ -2,7 +2,7 @@
 /*
 Plugin Name: PCSO Lottery Results
 Description: Fetches and displays PCSO lottery results.
-Version: 1.0.1
+Version: 1.1.1
 */
 
 if (!defined('ABSPATH')) {
