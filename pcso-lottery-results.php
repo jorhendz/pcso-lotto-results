@@ -2,15 +2,44 @@
 /*
 Plugin Name: PCSO Lottery Results
 Description: Fetches and displays PCSO lottery results.
-Autho: JoRhendz
-Version: 1.0
+Version: 1.0.1
 */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-// Define default PCSO URL
+// Update check URL
+define('PCSO_UPDATE_CHECK_URL', 'https://github.com/jorhendz/pcso-lotto-results/blob/main/update-check.php');
+
+// Check for plugin updates
+function check_plugin_updates($transient) {
+    if (empty($transient->checked)) {
+        return $transient;
+    }
+
+    $update_check_url = PCSO_UPDATE_CHECK_URL;
+    $plugin_slug = plugin_basename(__FILE__);
+    $current_version = $transient->checked[$plugin_slug];
+
+    $response = wp_remote_get($update_check_url);
+    if (!is_wp_error($response) && $response['response']['code'] == 200) {
+        $latest_version = trim($response['body']);
+        if (version_compare($current_version, $latest_version, '<')) {
+            $transient->response[$plugin_slug] = (object) array(
+                'id' => '1',
+                'slug' => $plugin_slug,
+                'new_version' => $latest_version,
+                'url' => '',
+                'package' => '',
+            );
+        }
+    }
+
+    return $transient;
+}
+add_filter('pre_set_site_transient_update_plugins', 'check_plugin_updates');
+
 define('PCSO_URL_DEFAULT', 'https://www.pcso.gov.ph/SearchLottoResult.aspx');
 
 // Fetch PCSO URL from options or use default if not set
