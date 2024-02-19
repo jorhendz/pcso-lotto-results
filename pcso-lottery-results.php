@@ -26,6 +26,9 @@ function check_plugin_updates($transient) {
     $response = wp_remote_get($update_check_url);
     if (!is_wp_error($response) && $response['response']['code'] == 200) {
         $latest_version = trim($response['body']);
+        // Debugging
+        echo "Current Version: $current_version<br>";
+        echo "Latest Version: $latest_version<br>";
         if (version_compare($current_version, $latest_version, '<')) {
             $transient->response[$plugin_slug] = (object) array(
                 'id' => '1',
@@ -35,11 +38,14 @@ function check_plugin_updates($transient) {
                 'package' => '',
             );
         }
+    } else {
+        // Debugging
+        echo "Failed to fetch version from $update_check_url<br>";
     }
 
     return $transient;
 }
-add_filter('pre_set_site_transient_update_plugins', 'check_plugin_updates');
+
 
 
 // Display update notice
