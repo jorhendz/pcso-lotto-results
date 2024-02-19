@@ -2,7 +2,7 @@
 /*
 Plugin Name: PCSO Lottery Results
 Description: Fetches and displays PCSO lottery results.
-Version: 1.0.1
+Version: 1.0.0
 */
 
 if (!defined('ABSPATH')) {
@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Update check URL
-define('PCSO_UPDATE_CHECK_URL', 'https://github.com/jorhendz/pcso-lotto-results/blob/main/update-check.php');
+define('PCSO_UPDATE_CHECK_URL', 'https://raw.githubusercontent.com/jorhendz/pcso-lotto-results/main/update-check.php');
 
 // Check for plugin updates
 function check_plugin_updates($transient) {
