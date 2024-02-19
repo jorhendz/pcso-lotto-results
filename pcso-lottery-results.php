@@ -40,6 +40,18 @@ function check_plugin_updates($transient) {
 }
 add_filter('pre_set_site_transient_update_plugins', 'check_plugin_updates');
 
+// Display update notice
+function display_update_notice() {
+    $current_version = get_plugin_data(__FILE__)['Version'];
+    $latest_version = $transient->response[plugin_basename(__FILE__)]->new_version;
+    if (version_compare($current_version, $latest_version, '<')) {
+        $update_url = admin_url('update.php?action=upgrade-plugin&plugin=' . urlencode(plugin_basename(__FILE__)));
+        $message = sprintf(__('There is a new version (%s) of PCSO Lottery Results available. <a href="%s">Update now</a>.'), $latest_version, $update_url);
+        echo '<div class="notice notice-warning"><p>' . $message . '</p></div>';
+    }
+}
+add_action('admin_notices', 'display_update_notice');
+
 define('PCSO_URL_DEFAULT', 'https://www.pcso.gov.ph/SearchLottoResult.aspx');
 
 // Fetch PCSO URL from options or use default if not set - new updates
